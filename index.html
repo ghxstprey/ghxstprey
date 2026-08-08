@@ -77,11 +77,33 @@
             font-size: 1.8rem;
         }
 
+        main,
+        footer {
+            transition: opacity 1s ease;
+        }
+
         main {
             position: relative;
             z-index: 1;
             max-width: 42ch;
             width: 100%;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #888;
+            z-index: 1;
+        }
+
+        body.text-hidden main,
+        body.text-hidden footer {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .abtme {
@@ -108,6 +130,10 @@
             a {
                 color: #fff;
             }
+
+            footer {
+                color: #555;
+            }
         }
     </style>
 </head>
@@ -122,6 +148,10 @@
         <p>github: <a href="https://github.com/ghxstprey">@ghxstprey</a>.</p>
         <p>instagram: <a href="https://instagram.com/ghxstprey">@ghxstprey</a>.</p>
     </main>
+    <footer>
+        <p>do you remember...? the rain..?</p>
+        <p>press g to hide text if you like the rain.</p>
+    </footer>
     <script>
         const rain = document.getElementById("rain");
         const vw = window.innerWidth;
@@ -140,11 +170,11 @@
             // fidget with this. high num means more cozy, lower is the opposite. thunderstorm maybe? :eyes:
             const dur = 1.5 + Math.random() * 0.9;
 
-            const x0 = Math.random() * (vw + 200) - 100;
+            const drift = vh * Math.tan(angle);
+            const x0 = -drift + Math.random() * (vw + drift);
             const y0 = -len - Math.random() * vh * 0.55;
             const needDown = (vh + len) - y0;
-            const needRight = (vw + len) - x0;
-            const travel = Math.max(needDown / cosA, needRight / sinA) * 1.05;
+            const travel = (needDown / cosA) * 1.05;
 
             const dx = travel * sinA;
             const dy = travel * cosA;
@@ -162,6 +192,12 @@
             // thank god for yt tutorials
             rain.appendChild(drop);
         }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key.toLowerCase() === "g") {
+                document.body.classList.toggle("text-hidden");
+            }
+        });
     </script>
 </body>
 
