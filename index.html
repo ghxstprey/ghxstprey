@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ghxstprey</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            background: #fff;
+            color: #000;
+            font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+            font-size: 16px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            display: grid;
+            /* center pls */
+            place-items: center;
+            justify-content: center;
+        }
+
+        .rain {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .rain i {
+            position: absolute;
+            display: block;
+            width: 1px;
+            height: var(--len);
+            background: currentColor;
+            opacity: var(--op);
+            transform: rotate(-20deg);
+            animation: fall var(--dur) linear var(--delay) infinite;
+            will-change: left, top;
+        }
+
+        @keyframes fall {
+            from {
+                left: var(--x);
+                top: var(--y);
+            }
+
+            to {
+                left: calc(var(--x) + var(--dx));
+                top: calc(var(--y) + var(--dy));
+            }
+        }
+
+        /* i love that i can name tags whatever i want */
+        pbutcooler {
+            background: linear-gradient(to right, #868686, #fff);
+            /* FUCK webkit... cough amen */
+            -webkit-background-clip: text;
+            /* i dont think i need webkit if i have this..? fuck it we ball */
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 42ch;
+            width: 100%;
+        }
+
+        .abtme {
+            color: #555;
+            /* doesnt look as good as i thought it would, leave in comment for later i guess */
+            /* text-indent: 1rem; */
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: #000;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #000;
+                color: #fff;
+            }
+
+            .tagline {
+                color: #aaa;
+            }
+
+            a {
+                color: #fff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rain" id="rain" aria-hidden="true"></div>
+    <main>
+        <pbutcooler>ghxstprey</pbutcooler>
+        <p class="abtme">does stuff sometimes.</p>
+        <!-- the goat -->
+        <p>worked on <a href="https://millyrack.pages.dev">doiksub</a>.</p> <!-- send to docs instead of github -->
+        <p>github: <a href="https://github.com/ghxstprey">@ghxstprey</a>.</p>
+        <p>instagram: <a href="https://instagram.com/ghxstprey">@ghxstprey</a>.</p>
+    </main>
+    <script>
+        const rain = document.getElementById("rain");
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const count = vw < 600 ? 40 : 78;
+
+        // all my homies HATE pi
+        const angle = 20 * Math.PI / 180;
+        const sinA = Math.sin(angle);
+        const cosA = Math.cos(angle);
+
+        for (let i = 0; i < count; i++) {
+            const drop = document.createElement("i");
+
+            const len = 30 + Math.random() * 90;
+            // fidget with this. high num means more cozy, lower is the opposite. thunderstorm maybe? :eyes:
+            const dur = 1.5 + Math.random() * 0.9;
+
+            const x0 = Math.random() * (vw + 200) - 100;
+            const y0 = -len - Math.random() * vh * 0.55;
+            const needDown = (vh + len) - y0;
+            const needRight = (vw + len) - x0;
+            const travel = Math.max(needDown / cosA, needRight / sinA) * 1.05;
+
+            const dx = travel * sinA;
+            const dy = travel * cosA;
+
+            // all this for some fuckin rain?
+            drop.style.setProperty("--x", x0 + "px");
+            drop.style.setProperty("--y", y0 + "px");
+            drop.style.setProperty("--dx", dx + "px");
+            drop.style.setProperty("--dy", dy + "px");
+            drop.style.setProperty("--len", len + "px");
+            drop.style.setProperty("--dur", dur + "s");
+            drop.style.setProperty("--delay", (-Math.random() * dur) + "s");
+            drop.style.setProperty("--op", (0.2 + Math.random() * 0.3).toFixed(2));
+
+            // thank god for yt tutorials
+            rain.appendChild(drop);
+        }
+    </script>
+</body>
+
+</html>
