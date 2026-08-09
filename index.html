@@ -143,7 +143,7 @@
     <div class="rain" id="rain" aria-hidden="true"></div>
     <main>
         <pbutcooler>ghxstprey</pbutcooler>
-        <p class="abtme">does stuff sometimes.</p>
+        <p class="abtme">that pretty mf.</p>
         <!-- the goat -->
         <p>worked on <a href="https://millyrack.pages.dev">doiksub</a>.</p> <!-- send to docs instead of github -->
         <p>github: <a href="https://github.com/ghxstprey">@ghxstprey</a>.</p>
@@ -192,6 +192,21 @@
 
             // thank god for yt tutorials
             rain.appendChild(drop);
+        }
+
+        const abtmeTexts = [
+            "that pretty mf.",
+            "does stuff sometimes.",
+            "the one.",
+            "cl9udblunts.", // cloud 9, cl9ud, whatever fuck you
+            "...",
+            "nonchalant.",
+        ];
+
+        const abtmeEl = document.querySelector(".abtme");
+        if (abtmeEl) {
+            abtmeEl.textContent =
+                abtmeTexts[Math.floor(Math.random() * abtmeTexts.length)];
         }
 
         document.addEventListener("keydown", (e) => {
