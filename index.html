@@ -201,13 +201,28 @@
             "cl9udblunts.", // cloud 9, cl9ud, whatever fuck you
             "...",
             "nonchalant.",
-            "uhh i forgot"
+            "uhh i forgot",
+            "playbxi carti.",
+            "lil tecca's cuz.",
+            "7xvn enjoyer." // goated artist
         ];
 
         const abtmeEl = document.querySelector(".abtme");
         if (abtmeEl) {
-            abtmeEl.textContent =
-                abtmeTexts[Math.floor(Math.random() * abtmeTexts.length)];
+            let abtmeIndex = Math.floor(Math.random() * abtmeTexts.length);
+            abtmeEl.textContent = abtmeTexts[abtmeIndex];
+
+            abtmeEl.style.cursor = "help"; // subtle
+            abtmeEl.style.transition = "opacity 0.5s ease";
+
+            abtmeEl.addEventListener("click", () => {
+                abtmeEl.style.opacity = "0";
+                setTimeout(() => {
+                    abtmeIndex = (abtmeIndex + 1) % abtmeTexts.length;
+                    abtmeEl.textContent = abtmeTexts[abtmeIndex];
+                    abtmeEl.style.opacity = "1";
+                }, 500);
+            });
         }
 
         document.addEventListener("keydown", (e) => {
